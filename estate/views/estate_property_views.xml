@@ -73,8 +73,8 @@
                 <field name="bedrooms"/>
                 <field name="living_area"/>
                 <field name="facades"/>
-                <filter string="New properties" domain="[('state', '=', 'new')]"/>
-                <filter string="Offer Received" domain="[('state', '=', 'offer_received')]"/>
+                <filter string="New properties" name="new_properties" domain="[('state', '=', 'new')]"/>
+                <filter string="Offer Received" name="offer_received" domain="[('state', '=', 'offer_received')]"/>
                 <filter string="Postcode" name="groupby_postcode" context="{'group_by': 'postcode'}"/>
             </search>
         </field>

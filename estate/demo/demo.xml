@@ -3,6 +3,20 @@
         <record id="1" model="estate.property">
             <field name="name">Estate 1</field>
             <field name="expected_price">20000</field>
+            <field name="state">new</field>
+            <field name="postcode">10250</field>
+        </record>
+        <record id="2" model="estate.property">
+            <field name="name">Estate 2</field>
+            <field name="expected_price">1000000</field>
+            <field name="state">new</field>
+            <field name="postcode">10110</field>
+        </record>
+        <record id="3" model="estate.property">
+            <field name="name">Estate 3</field>
+            <field name="expected_price">500</field>
+            <field name="state">new</field>
+            <field name="postcode">10250</field>
         </record>
     </data>
 </odoo>
