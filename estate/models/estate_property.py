@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import _, models, fields, api
 
 
 class EstateProperty(models.Model):
@@ -58,3 +58,24 @@ class EstateProperty(models.Model):
     def _compute_best_price(self):
         for record in self:
             record.best_price = max(record.offer_ids.mapped("price"), default=0)
+
+    @api.onchange("garden")
+    def _onchange_garden(self):
+        for record in self:
+            if record.garden:
+                record.garden_orientation = "north"
+                record.garden_area = 10
+            else:
+                record.garden_orientation = ""
+                record.garden_area = 0
+
+    @api.onchange("date_availability")
+    def _onchange_date_availability(self):
+        for record in self:
+            if record.date_availability < fields.Date.today():
+                return {
+                    "warning": {
+                        "title": _("Warning"),
+                        "message": "Date availability must be greater than or equal today",
+                    }
+                }
