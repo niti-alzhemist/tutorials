@@ -1,10 +1,23 @@
 from odoo import _, models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_compare
 
 
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Property"
+    _sql_constraints = [
+        (
+            "expected_price_strictly_positive",
+            "CHECK (expected_price > 0)",
+            "Expected price must be strictly positive.",
+        ),
+        (
+            "selling_price",
+            "CHECK (selling_price >= 0)",
+            "Selling price must be positive.",
+        ),
+    ]
 
     def _default_availability_date(self):
         return fields.Date.add(fields.Date.today(), months=3)
@@ -38,7 +51,7 @@ class EstateProperty(models.Model):
         default="new",
     )
 
-    # Foreign key
+    # ----------------- Foreign key -----------------
     property_type_id = fields.Many2one("estate.property.type")
     buyer_id = fields.Many2one("res.partner")
     seller_id = fields.Many2one("res.users", default=lambda self: self.env.user)
@@ -49,7 +62,7 @@ class EstateProperty(models.Model):
     total_area = fields.Float(string="Total area SQM", compute="_compute_total_area")
     best_price = fields.Float(compute="_compute_best_price")
 
-    # Compute method
+    # ----------------- Compute method -----------------
     @api.depends("living_area", "garden_area")
     def _compute_total_area(self):
         for record in self:
@@ -81,7 +94,25 @@ class EstateProperty(models.Model):
                     }
                 }
 
-    # action methods
+    # ----------------- Constraints -----------------
+    @api.constrains("selling_price", "expected_price")
+    def _constraint_selling_price(self):
+        for record in self:
+            ninty_percent_value = 90 / 100 * record.expected_price
+            if (
+                    not float_compare(
+                        record.selling_price, ninty_percent_value, precision_digits=0.01
+                    )
+                        > 0
+            ):
+                raise ValidationError(
+                    _(
+                        "The selling price must be greater than %.2f"
+                        % ninty_percent_value
+                    )
+                )
+
+    # ----------------- action methods -----------------
     def action_sold(self):
         for record in self:
             if "canceled" in record.offer_ids.mapped("status"):
