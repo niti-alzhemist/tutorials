@@ -18,6 +18,7 @@ class EstateProperty(models.Model):
             "Selling price must be positive.",
         ),
     ]
+    _order = "id desc"
 
     def _default_availability_date(self):
         return fields.Date.add(fields.Date.today(), months=3)
