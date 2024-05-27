@@ -1,4 +1,5 @@
 from odoo import _, models, fields, api
+from odoo.exceptions import UserError
 
 
 class EstateProperty(models.Model):
@@ -79,3 +80,20 @@ class EstateProperty(models.Model):
                         "message": "Date availability must be greater than or equal today",
                     }
                 }
+
+    # action methods
+    def action_sold(self):
+        for record in self:
+            if "canceled" in record.offer_ids.mapped("status"):
+                raise UserError(_("Cannot sold the canceled property"))
+            if len(record.mapped("offer_ids")) <= 0:
+                raise UserError(_("There are no offers with this property"))
+
+            return record.write({"state": "sold"})
+
+    def action_cancel(self):
+        for record in self:
+            if "sold" in record.mapped("state"):
+                raise UserError(_("Cannot cancel the sold property"))
+
+            return record.write({"state": "canceled"})
