@@ -3,6 +3,8 @@
         <field name="name">Real Estate</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_available': True}</field>
+
     </record>
 
     <record id="estate_property_view_tree" model="ir.ui.view">
@@ -19,7 +21,7 @@
                 <field name="expected_price"/>
                 <field name="selling_price"/>
                 <field name="date_availability" optional="hide"/>
-                <field name="state" invisible="True"/>
+                <field name="state" invisible="False"/>
             </tree>
         </field>
     </record>
@@ -113,6 +115,7 @@
                 <filter string="New properties" name="new_properties" domain="[('state', '=', 'new')]"/>
                 <filter string="Offer Received" name="offer_received" domain="[('state', '=', 'offer_received')]"/>
                 <filter string="Postcode" name="groupby_postcode" context="{'group_by': 'postcode'}"/>
+                <filter string="Available" name="available" domain="[('state', 'in', ('new', 'offer_received'))]"/>
             </search>
         </field>
     </record>
