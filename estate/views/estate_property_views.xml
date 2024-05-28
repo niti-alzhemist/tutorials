@@ -5,8 +5,8 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <record id="estate_property_tree_view" model="ir.ui.view">
-        <field name="name">estate.property.tree.view</field>
+    <record id="estate_property_view_tree" model="ir.ui.view">
+        <field name="name">estate.property.view.tree</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <tree decoration-success="state in ('offer_received','offer_accepted')"
@@ -24,8 +24,8 @@
         </field>
     </record>
 
-    <record id="estate_property_form_view" model="ir.ui.view">
-        <field name="name">estate.property.form.view</field>
+    <record id="estate_property_view_form" model="ir.ui.view">
+        <field name="name">estate.property.view.form</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form>
@@ -99,8 +99,8 @@
         </field>
     </record>
 
-    <record id="estate_property_search_view" model="ir.ui.view">
-        <field name="name">estate.property.search.view</field>
+    <record id="estate_property_view_search" model="ir.ui.view">
+        <field name="name">estate.property.view.search</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <search>

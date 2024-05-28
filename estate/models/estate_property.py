@@ -105,6 +105,7 @@ class EstateProperty(models.Model):
                         record.selling_price, ninty_percent_value, precision_digits=0.01
                     )
                         > 0
+                    and record.selling_price != 0
             ):
                 raise ValidationError(
                     _(

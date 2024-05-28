@@ -10,11 +10,11 @@
         "security/res_groups.xml",
         "security/ir.model.access.csv",
         # View
-        "views/estate_menu.xml",
-        "views/estate_property_views.xml",
         "views/estate_property_type_views.xml",
         "views/estate_property_offer_views.xml",
         "views/estate_property_tag_views.xml",
+        "views/estate_property_views.xml",
+        "views/estate_menu.xml",
     ],
-    "demo": ["demo/demo.xml"],
+
 }
