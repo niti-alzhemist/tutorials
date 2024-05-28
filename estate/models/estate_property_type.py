@@ -1,4 +1,4 @@
-from odoo import fields, models, _
+from odoo import fields, models, _, api
 
 
 class EstatePropertyType(models.Model):
@@ -13,6 +13,7 @@ class EstatePropertyType(models.Model):
     offer_count = fields.Integer(compute="_compute_offer_count")
 
     # compute methods
+    @api.depends('offer_ids')
     def _compute_offer_count(self):
         for record in self:
             record.offer_count = len(record.mapped('offer_ids'))
