@@ -6,6 +6,7 @@ from odoo.tools import float_compare
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Property"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _sql_constraints = [
         (
             "expected_price_strictly_positive",
@@ -62,6 +63,13 @@ class EstateProperty(models.Model):
     # Compute fields
     total_area = fields.Float(string="Total area SQM", compute="_compute_total_area")
     best_price = fields.Float(compute="_compute_best_price")
+
+    # ----------------- Overrides method -----------------
+    def unlink(self):
+        for record in self:
+            if record.state in ('new', 'canceled'):
+                raise UserError(_('Cannot delete NEW and CANCELED properties'))
+            super().unlink()
 
     # ----------------- Compute method -----------------
     @api.depends("living_area", "garden_area")

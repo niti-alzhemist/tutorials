@@ -4,6 +4,7 @@ from odoo import fields, api, models, _
 from datetime import date
 
 from odoo.exceptions import UserError
+from odoo.tools import float_compare
 
 
 class EstatePropertyOffer(models.Model):
@@ -72,3 +73,24 @@ class EstatePropertyOffer(models.Model):
             self.property_id.write({"selling_price": 0, "buyer_id": False})
 
         return self.write({"status": "refused"})
+
+    # ----------------- Overrides method -----------------
+    @api.model
+    def create(self, val):
+
+        if val['price'] and val['property_id']:
+            estate = self.env['estate.property'].browse(val['property_id'])
+
+            if estate.offer_ids:
+                max_offer = max(estate.offer_ids.mapped('price'), default=0)
+                print("max_offer", max_offer)
+                current_offer = val['price']
+                if float_compare(current_offer, max_offer, precision_digits=2) < 0:
+                    raise UserError(_("Cannot create offer less than %f" % max_offer))
+
+            result = super().create(val)
+            estate.write({
+                'state': 'offer_received'
+            })
+
+            return result

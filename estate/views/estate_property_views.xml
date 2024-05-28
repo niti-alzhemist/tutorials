@@ -38,7 +38,6 @@
                     <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
                 </header>
                 <sheet>
-
                     <div>
                         <label for="name" string="Name"/>
                         <h1>
@@ -60,7 +59,6 @@
                             <field name="selling_price"/>
                         </group>
                     </group>
-
                     <notebook>
                         <page string="Description">
                             <group>
@@ -96,7 +94,13 @@
                             </group>
                         </page>
                     </notebook>
+                    <separator/>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </sheet>
+
             </form>
         </field>
     </record>
