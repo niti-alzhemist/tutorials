@@ -22,6 +22,14 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div clas="oe_button_box">
+                        <button name="action_view_offers" type="object" class="oe_stat_button" icon="fa-list">
+                            <span class="o_stat_value">
+                                <field name="offer_count" widget="line_count"/>
+                            </span>
+                            <span class="o_stat_text">(Offers)</span>
+                        </button>
+                    </div>
                     <h1>
                         <field name="name"/>
                     </h1>
