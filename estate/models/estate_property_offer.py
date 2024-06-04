@@ -31,7 +31,7 @@ class EstatePropertyOffer(models.Model):
 
     # Related fields
     property_type_id = fields.Many2one(
-        related="property_id.property_type_id", stored=True
+        related="property_id.property_type_id", store=True
     )
 
     # Compute fields
