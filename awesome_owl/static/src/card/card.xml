@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="awesome_owl.Card">
+        <div class="card w-25">
+            <div class="card-body">
+                <div class="card-title">
+                    <div class="d-flex gap-2">
+                        <h5>
+                            <t t-esc="props.title"/>
+                        </h5>
+                        <div t-on-click="toggleCard">
+                            <span t-if="this.isOpen.value" class="fa fa-chevron-down"/>
+                            <span t-else="" class="fa fa-chevron-up"/>
+                        </div>
+                    </div>
+
+                </div>
+                <t t-if="this.isOpen.value">
+                    <div class="card-body">
+                        <t t-slot="default"/>
+                    </div>
+                    <t t-slot="footer"/>
+                </t>
+
+            </div>
+        </div>
+    </t>
+</templates>
